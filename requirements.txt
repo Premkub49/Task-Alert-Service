@@ -17,11 +17,9 @@ idna==3.11
 numpy==2.3.5
 paho-mqtt==2.1.0
 pandas==2.3.3
-PyAudio==0.2.14
 pycparser==2.23
 pydantic==2.12.4
 pydantic_core==2.41.5
-pydub==0.25.1
 python-dateutil==2.9.0.post0
 python-dotenv==1.2.1
 pytz==2025.2
