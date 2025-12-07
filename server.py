@@ -3,6 +3,7 @@ from datetime import datetime
 from io import BytesIO
 
 import httpx
+import librosa
 import pandas as pd
 import pytz
 import soundfile as sf
@@ -22,14 +23,14 @@ app = FastAPI()
 def check_next_alert():
     next_tasks = pd.read_csv("./temp/next_task.csv")
     if next_tasks.shape[0] <= 0:
-        return Response(content="No task exists", status_code=404)
+        return Response(content="No task exists", status_code=200)
     top_task = next_tasks.iloc[0]
     tts = gTTS(text=top_task["title"], lang="th")
     mp3_fp = BytesIO()
     tts.write_to_fp(mp3_fp)
     mp3_fp.seek(0)
     try:
-        data, samplerate = sf.read(mp3_fp)
+        data, samplerate = librosa.load(mp3_fp, sr=16000, mono=True)
         wav_fp = BytesIO()
         sf.write(wav_fp, data, samplerate, format="WAV", subtype="PCM_16")
         wav_fp.seek(0)
