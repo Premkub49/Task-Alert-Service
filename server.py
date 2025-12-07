@@ -89,7 +89,7 @@ async def call_self():
 @app.on_event("startup")
 async def start_scheduler():
     scheduler = AsyncIOScheduler()
-    scheduler.add_job(job_task, "interval", minutes=0.4)
+    scheduler.add_job(job_task, "interval", minutes=0.1)
     scheduler.add_job(call_self, "interval", minutes=Config.TIME_PING)
     scheduler.start()
 
