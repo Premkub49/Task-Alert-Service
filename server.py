@@ -22,7 +22,7 @@ app = FastAPI()
 def check_next_alert():
     next_tasks = pd.read_csv("./temp/next_task.csv")
     if next_tasks.shape[0] <= 0:
-        return Response(content="No task exists", status_code=200)
+        return Response(content="No task exists", status_code=404)
     top_task = next_tasks.iloc[0]
     tts = gTTS(text=top_task["title"], lang="th")
     mp3_fp = BytesIO()
