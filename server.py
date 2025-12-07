@@ -1,4 +1,5 @@
 import os
+import time
 from datetime import datetime
 from io import BytesIO
 
@@ -42,6 +43,7 @@ def check_next_alert():
         next_tasks = next_tasks.iloc[1:]
         update_task_gg_sheet(id=top_task["id"].item(), status="complete")
         mqtt_send(topic="@msg/task", payload={"status": 0})
+        time.sleep(1)
         if next_tasks.shape[0] > 0:
             mqtt_send(topic="@msg/task", payload={"status": 1})
         next_tasks.to_csv("./temp/next_task.csv", index=False)
@@ -73,6 +75,8 @@ def job_task():
     else:
         matched_rows.to_csv("./temp/next_task.csv", index=False)
     # send mqtt
+    mqtt_send(topic="@msg/task", payload={"status": 0})
+    time.sleep(1)
     mqtt_send(topic="@msg/task", payload={"status": 1})
 
 
